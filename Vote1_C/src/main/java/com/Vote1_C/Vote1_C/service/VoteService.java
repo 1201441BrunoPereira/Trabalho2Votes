@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 @Service
 public class VoteService {
     @Autowired
@@ -30,22 +29,6 @@ public class VoteService {
 
     public boolean voteReviewApproved (Vote vote) throws IOException, InterruptedException {
         return reviewRepository.isApproved(vote.getReviewId());
-    }
-
-
-    public int getTotalVotesByReviewId(Long reviewId) throws IOException, InterruptedException {
-        List<Vote> list = new ArrayList<>();
-        int votesAPI2 = vote2Repository.getTotalVotesByReviewId(reviewId);
-        list = repository.findId(reviewId);
-        int sizeList = list.size();
-        int votes = 0;
-        for (int i=0; i<sizeList; i++){
-            if(list.get(i).isVote()){
-                votes++;
-            }
-        }
-        votes = votes + votesAPI2;
-        return votes;
     }
 
     public Vote updateVoteReview(Vote vote) throws IOException, InterruptedException {
@@ -66,16 +49,5 @@ public class VoteService {
         }
     }
 
-    public Vote getVoteByReviewIdAndUserId(Long reviewId, Long userId){
-        Vote existVote = repository.findReviewIdAndUserId(reviewId, userId);
-        if(existVote != null){
-            return existVote;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-
-    public List<Vote> getAllVotes(){
-        return repository.findAllVotes();
-    }
 
 }

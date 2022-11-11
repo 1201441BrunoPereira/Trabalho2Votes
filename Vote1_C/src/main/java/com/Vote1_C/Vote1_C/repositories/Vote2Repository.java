@@ -12,26 +12,6 @@ import java.net.http.HttpResponse;
 @Repository
 public class Vote2Repository {
 
-    public int getTotalVotesByReviewId(Long reviewId) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create("http://localhost:8085/votes/" + reviewId))
-                .build();
-
-        HttpResponse response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        var code = response.statusCode();
-        if(code == 200){
-            ObjectMapper objectMapper = new ObjectMapper();
-            String body = response.body().toString();
-            int totalVotes = objectMapper.readValue(body, int.class);
-            return totalVotes;
-        }
-        return 0;
-    }
-
     public boolean existVote(Long reviewId, Long userId) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

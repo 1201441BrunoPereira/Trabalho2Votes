@@ -27,18 +27,5 @@ public class VoteController {
         }
     }
 
-    @GetMapping(value = "/")
-    public List<Vote> getAllVotes(){return service.getAllVotes();}
-
-    @GetMapping(value = "/{reviewId}/")
-    public int getTotalVotesByReviewId(@PathVariable("reviewId") final Long reviewId ) throws IOException, InterruptedException {
-        return service.getTotalVotesByReviewId(reviewId);
-    }
-
-    @GetMapping(value = "/{reviewId}/{userId}")
-    public Vote getVoteByReviewIdAndUserId(@PathVariable("reviewId") final Long reviewId, @PathVariable("userId") final Long userId ){
-        return service.getVoteByReviewIdAndUserId(reviewId,userId);
-    }
-
 
 }
