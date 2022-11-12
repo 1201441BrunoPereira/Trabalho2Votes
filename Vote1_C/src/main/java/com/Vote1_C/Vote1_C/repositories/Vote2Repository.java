@@ -8,15 +8,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.UUID;
 
 @Repository
 public class Vote2Repository {
 
-    public boolean existVote(Long reviewId, Long userId) throws IOException, InterruptedException {
+    public boolean existVote(UUID uuid, Long userId) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8085/votes/" + reviewId + "/" + userId))
+                .uri(URI.create("http://localhost:8085/votes/" + uuid + "/" + userId))
                 .build();
 
         HttpResponse response = client.send(request,

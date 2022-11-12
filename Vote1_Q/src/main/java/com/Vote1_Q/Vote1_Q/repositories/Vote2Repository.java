@@ -8,15 +8,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.UUID;
 
 @Repository
 public class Vote2Repository {
 
-    public int getTotalVotesByReviewId(Long reviewId) throws IOException, InterruptedException {
+    public int getTotalVotesByReviewId(UUID uuidReview) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8085/votes/" + reviewId))
+                .uri(URI.create("http://localhost:8085/votes/" + uuidReview))
                 .build();
 
         HttpResponse response = client.send(request,
@@ -32,11 +33,11 @@ public class Vote2Repository {
         return 0;
     }
 
-    public boolean existVote(Long reviewId, Long userId) throws IOException, InterruptedException {
+    public boolean existVote(UUID uuidReview, Long userId) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8085/votes/" + reviewId + "/" + userId))
+                .uri(URI.create("http://localhost:8085/votes/" + uuidReview + "/" + userId))
                 .build();
 
         HttpResponse response = client.send(request,

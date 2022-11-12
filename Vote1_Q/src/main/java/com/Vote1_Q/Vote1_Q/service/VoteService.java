@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Service
 public class VoteService {
     @Autowired
@@ -21,10 +23,10 @@ public class VoteService {
     private Vote2Repository vote2Repository;
 
 
-    public int getTotalVotesByReviewId(Long reviewId) throws IOException, InterruptedException {
+    public int getTotalVotesByReviewId(UUID uuidReview) throws IOException, InterruptedException {
         List<Vote> list = new ArrayList<>();
-        int votesAPI2 = vote2Repository.getTotalVotesByReviewId(reviewId);
-        list = repository.findId(reviewId);
+        int votesAPI2 = vote2Repository.getTotalVotesByReviewId(uuidReview);
+        list = repository.findId(uuidReview);
         int sizeList = list.size();
         int votes = 0;
         for (int i=0; i<sizeList; i++){
@@ -36,8 +38,8 @@ public class VoteService {
         return votes;
     }
 
-    public Vote getVoteByReviewIdAndUserId(Long reviewId, Long userId){
-        Vote existVote = repository.findReviewIdAndUserId(reviewId, userId);
+    public Vote getVoteByReviewIdAndUserId(UUID uuidReview, Long userId){
+        Vote existVote = repository.findReviewIdAndUserId(uuidReview, userId);
         if(existVote != null){
             return existVote;
         }

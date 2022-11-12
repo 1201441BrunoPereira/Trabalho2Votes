@@ -8,15 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-    @Query("SELECT v FROM Vote v WHERE v.reviewId = :reviewId")
-    List<Vote> findId(Long reviewId);
+    @Query("SELECT v FROM Vote v WHERE v.uuidReview = :uuidReview")
+    List<Vote> findId(UUID uuidReview);
 
-    @Query("SELECT v FROM Vote v WHERE v.reviewId = :reviewId AND v.userId = :userId")
-    Vote findReviewIdAndUserId(Long reviewId, Long userId);
+    @Query("SELECT v FROM Vote v WHERE v.uuidReview = :uuidReview AND v.userId = :userId")
+    Vote findReviewIdAndUserId(UUID uuidReview, Long userId);
 
     @Query("SELECT v FROM Vote v ")
     List<Vote> findAllVotes();

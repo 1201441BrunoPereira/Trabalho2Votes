@@ -3,13 +3,14 @@ package com.Vote1_C.Vote1_C.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "vote")
 public class Vote {
 
     @Column
-    private Long reviewId;
+    private UUID uuidReview;
 
 
     @Column
@@ -26,12 +27,12 @@ public class Vote {
     public Vote() {
     }
 
-    public Long getReviewId() {
-        return reviewId;
+    public UUID getUuidReview() {
+        return uuidReview;
     }
 
-    public void setReviewId(Long reviewId) {
-        this.reviewId = reviewId;
+    public void setUuidReview(UUID uuidReview) {
+        this.uuidReview = uuidReview;
     }
 
     public boolean isVote() {
@@ -58,8 +59,8 @@ public class Vote {
         this.userId = userId;
     }
 
-    public Vote(Long reviewId, boolean vote) {
-        this.reviewId = reviewId;
+    public Vote(UUID uuidReview, boolean vote) {
+        this.uuidReview = uuidReview;
         this.vote = vote;
     }
 

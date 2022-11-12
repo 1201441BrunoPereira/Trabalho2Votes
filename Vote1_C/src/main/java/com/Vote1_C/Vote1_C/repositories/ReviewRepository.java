@@ -7,15 +7,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.UUID;
 
 @Repository
 public class ReviewRepository {
 
-    public Boolean isApproved(Long reviewId) throws IOException, InterruptedException {
+    public Boolean isApproved(UUID uuidReview) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8081/reviews/status/" + reviewId))
+                .uri(URI.create("http://localhost:8081/reviews/status/" + uuidReview))
                 .build();
 
         HttpResponse response = client.send(request,
