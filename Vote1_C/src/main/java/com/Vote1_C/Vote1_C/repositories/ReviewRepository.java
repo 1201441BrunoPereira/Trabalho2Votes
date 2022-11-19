@@ -12,11 +12,11 @@ import java.util.UUID;
 @Repository
 public class ReviewRepository {
 
-    public Boolean isApproved(UUID uuidReview) throws IOException, InterruptedException {
+    public Boolean isApproved(String reviewId) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8081/reviews/status/" + uuidReview))
+                .uri(URI.create("http://localhost:8081/reviews/status/" + reviewId))
                 .build();
 
         HttpResponse response = client.send(request,

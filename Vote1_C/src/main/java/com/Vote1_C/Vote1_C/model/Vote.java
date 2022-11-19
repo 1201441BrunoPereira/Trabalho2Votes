@@ -1,6 +1,6 @@
 package com.Vote1_C.Vote1_C.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Vote {
 
     @Column
-    private UUID uuidReview;
+    private String reviewId;
 
 
     @Column
@@ -20,19 +20,20 @@ public class Vote {
     private Long userId;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
-    private Long id;
+    @GeneratedValue(generator = "idGenerator")
+    @GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "ID", nullable = false, length = 36)
+    private String id;
 
     public Vote() {
     }
 
-    public UUID getUuidReview() {
-        return uuidReview;
+    public String getReviewId() {
+        return reviewId;
     }
 
-    public void setUuidReview(UUID uuidReview) {
-        this.uuidReview = uuidReview;
+    public void setReviewId(String uuidReview) {
+        this.reviewId = uuidReview;
     }
 
     public boolean isVote() {
@@ -43,11 +44,11 @@ public class Vote {
         this.vote = vote;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -59,8 +60,14 @@ public class Vote {
         this.userId = userId;
     }
 
-    public Vote(UUID uuidReview, boolean vote) {
-        this.uuidReview = uuidReview;
+    public static String generateUUID(){
+        UUID Uuid = UUID.randomUUID();
+        String id = Uuid.toString();
+        return  id;
+    }
+
+    public Vote(String reviewId, boolean vote) {
+        this.reviewId = reviewId;
         this.vote = vote;
     }
 

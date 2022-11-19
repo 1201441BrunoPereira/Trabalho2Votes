@@ -28,7 +28,7 @@ public class VoteService {
     private Vote2Repository vote2Repository;
 
     public boolean voteReviewApproved (Vote vote) throws IOException, InterruptedException {
-        return reviewRepository.isApproved(vote.getUuidReview());
+        return reviewRepository.isApproved(vote.getReviewId());
     }
 
     public Vote updateVoteReview(Vote vote) throws IOException, InterruptedException {
@@ -38,9 +38,11 @@ public class VoteService {
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.CONFLICT,"You are not logged");
         }
-        Vote existVote = repository.findReviewIdAndUserId(vote.getUuidReview(), userId);
-        boolean existVote2 = vote2Repository.existVote(vote.getUuidReview(), userId);
+        Vote existVote = repository.findReviewIdAndUserId(vote.getReviewId(), userId);
+        boolean existVote2 = vote2Repository.existVote(vote.getReviewId(), userId);
         if(existVote == null && existVote2){
+            String id = vote.generateUUID();
+            vote.setReviewId(id);
             vote.setUserId(userId);
             return repository.save(vote);
         }
