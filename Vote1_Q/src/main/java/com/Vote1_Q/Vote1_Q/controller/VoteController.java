@@ -21,14 +21,14 @@ public class VoteController {
     @GetMapping(value = "/")
     public List<Vote> getAllVotes(){return service.getAllVotes();}
 
-    @GetMapping(value = "/{uuid}/")
-    public int getTotalVotesByReviewId(@PathVariable("uuid") final UUID uuidReview ) throws IOException, InterruptedException {
-        return service.getTotalVotesByReviewId(uuidReview);
+    @GetMapping(value = "/{reviewId}/")
+    public int getTotalVotesByReviewId(@PathVariable("reviewId") final String reviewId ) throws IOException, InterruptedException {
+        return service.getTotalVotesByReviewId(reviewId);
     }
 
-    @GetMapping(value = "/{uuid}/{userId}")
-    public Vote getVoteByReviewIdAndUserId(@PathVariable("uuid") final UUID uuidReview , @PathVariable("userId") final Long userId ){
-        return service.getVoteByReviewIdAndUserId(uuidReview,userId);
+    @GetMapping(value = "/{reviewId}/{userId}")
+    public Vote getVoteByReviewIdAndUserId(@PathVariable("reviewId") final String reviewId , @PathVariable("userId") final Long userId ){
+        return service.getVoteByReviewIdAndUserId(reviewId,userId);
     }
 
 

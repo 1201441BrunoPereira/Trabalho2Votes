@@ -23,10 +23,10 @@ public class VoteService {
     private Vote2Repository vote2Repository;
 
 
-    public int getTotalVotesByReviewId(UUID uuidReview) throws IOException, InterruptedException {
+    public int getTotalVotesByReviewId(String reviewId) throws IOException, InterruptedException {
         List<Vote> list = new ArrayList<>();
-        int votesAPI2 = vote2Repository.getTotalVotesByReviewId(uuidReview);
-        list = repository.findId(uuidReview);
+        int votesAPI2 = vote2Repository.getTotalVotesByReviewId(reviewId);
+        list = repository.findId(reviewId);
         int sizeList = list.size();
         int votes = 0;
         for (int i=0; i<sizeList; i++){
@@ -38,8 +38,8 @@ public class VoteService {
         return votes;
     }
 
-    public Vote getVoteByReviewIdAndUserId(UUID uuidReview, Long userId){
-        Vote existVote = repository.findReviewIdAndUserId(uuidReview, userId);
+    public Vote getVoteByReviewIdAndUserId(String reviewId, Long userId){
+        Vote existVote = repository.findReviewIdAndUserId(reviewId, userId);
         if(existVote != null){
             return existVote;
         }

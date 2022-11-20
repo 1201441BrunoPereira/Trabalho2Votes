@@ -13,11 +13,11 @@ import java.util.UUID;
 @Repository
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-    @Query("SELECT v FROM Vote v WHERE v.uuidReview = :uuidReview")
-    List<Vote> findId(UUID uuidReview);
+    @Query("SELECT v FROM Vote v WHERE v.reviewId = :reviewId")
+    List<Vote> findId(String reviewId);
 
-    @Query("SELECT v FROM Vote v WHERE v.uuidReview = :uuidReview AND v.userId = :userId")
-    Vote findReviewIdAndUserId(UUID uuidReview, Long userId);
+    @Query("SELECT v FROM Vote v WHERE v.reviewId = :reviewId AND v.userId = :userId")
+    Vote findReviewIdAndUserId(String reviewId, Long userId);
 
     @Query("SELECT v FROM Vote v ")
     List<Vote> findAllVotes();

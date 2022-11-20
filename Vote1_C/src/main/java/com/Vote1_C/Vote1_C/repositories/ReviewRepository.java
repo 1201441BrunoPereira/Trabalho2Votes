@@ -16,7 +16,7 @@ public class ReviewRepository {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8081/reviews/status/" + reviewId))
+                .uri(URI.create("http://localhost:8084/reviews/status/" + reviewId))
                 .build();
 
         HttpResponse response = client.send(request,

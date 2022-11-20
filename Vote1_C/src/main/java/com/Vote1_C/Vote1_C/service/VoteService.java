@@ -39,10 +39,11 @@ public class VoteService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"You are not logged");
         }
         Vote existVote = repository.findReviewIdAndUserId(vote.getReviewId(), userId);
-        boolean existVote2 = vote2Repository.existVote(vote.getReviewId(), userId);
+        //boolean existVote2 = vote2Repository.existVote(vote.getReviewId(), userId);
+        boolean existVote2 = true;
         if(existVote == null && existVote2){
             String id = vote.generateUUID();
-            vote.setReviewId(id);
+            vote.setId(id);
             vote.setUserId(userId);
             return repository.save(vote);
         }

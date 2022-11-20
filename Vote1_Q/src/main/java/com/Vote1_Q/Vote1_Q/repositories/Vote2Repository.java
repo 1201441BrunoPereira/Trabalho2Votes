@@ -13,11 +13,11 @@ import java.util.UUID;
 @Repository
 public class Vote2Repository {
 
-    public int getTotalVotesByReviewId(UUID uuidReview) throws IOException, InterruptedException {
+    public int getTotalVotesByReviewId(String reviewId) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8085/votes/" + uuidReview))
+                .uri(URI.create("http://localhost:8085/votes/" + reviewId))
                 .build();
 
         HttpResponse response = client.send(request,
@@ -33,11 +33,11 @@ public class Vote2Repository {
         return 0;
     }
 
-    public boolean existVote(UUID uuidReview, Long userId) throws IOException, InterruptedException {
+    public boolean existVote(String reviewId, Long userId) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:8085/votes/" + uuidReview + "/" + userId))
+                .uri(URI.create("http://localhost:8085/votes/" + reviewId + "/" + userId))
                 .build();
 
         HttpResponse response = client.send(request,
