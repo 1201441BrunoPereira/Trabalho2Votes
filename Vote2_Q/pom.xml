@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
+		<version>2.7.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.Vote1_C</groupId>
-	<artifactId>Vote1_C</artifactId>
+	<groupId>com.Vote2_Q</groupId>
+	<artifactId>Vote2_Q</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Vote1_C</name>
-	<description>Instance 1 of Vote Comands</description>
+	<name>Vote2_Q</name>
+	<description>Second application for query requests of votes</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

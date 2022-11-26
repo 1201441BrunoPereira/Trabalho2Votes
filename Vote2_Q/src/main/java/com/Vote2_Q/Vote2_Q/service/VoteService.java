@@ -1,7 +1,7 @@
-package com.Vote1_Q.Vote1_Q.service;
+package com.Vote2_Q.Vote2_Q.service;
 
-import com.Vote1_Q.Vote1_Q.model.Vote;
-import com.Vote1_Q.Vote1_Q.repositories.VoteRepository;
+import com.Vote2_Q.Vote2_Q.model.Vote;
+import com.Vote2_Q.Vote2_Q.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,6 @@ public class VoteService {
 
     public int getTotalVotesByReviewId(String reviewId){
         List<Vote> list;
-        //int votesAPI2 = vote2Repository.getTotalVotesByReviewId(reviewId);
         list = repository.findId(reviewId);
         int sizeList = list.size();
         int votes = 0;
@@ -42,5 +41,4 @@ public class VoteService {
     public Vote getVoteById(String voteId){
         return repository.findVoteById(voteId);
     }
-
 }

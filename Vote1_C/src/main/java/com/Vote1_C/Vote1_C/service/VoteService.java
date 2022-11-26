@@ -1,11 +1,12 @@
 package com.Vote1_C.Vote1_C.service;
 
 
+import com.Vote1_C.Vote1_C.RabbitMQ.RabbitMQPublisher;
 import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.repositories.ReviewRepository;
-import com.Vote1_C.Vote1_C.repositories.Vote2Repository;
 import com.Vote1_C.Vote1_C.repositories.VoteRepository;
 import com.Vote1_C.Vote1_C.security.JwtUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,13 @@ public class VoteService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private Vote2Repository vote2Repository;
+    private RabbitMQPublisher jsonProducer;
 
     public boolean voteReviewApproved (Vote vote) throws IOException, InterruptedException {
         return reviewRepository.isApproved(vote.getReviewId());
     }
 
-    public Vote updateVoteReview(Vote vote) throws IOException, InterruptedException {
+    public Vote updateVoteReview(Vote vote) throws JsonProcessingException {
         Long userId;
         try{
             userId = Long.valueOf(jwtUtils.getUserFromJwtToken(jwtUtils.getJwt()));
@@ -39,18 +40,15 @@ public class VoteService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"You are not logged");
         }
         Vote existVote = repository.findReviewIdAndUserId(vote.getReviewId(), userId);
-        //boolean existVote2 = vote2Repository.existVote(vote.getReviewId(), userId);
-        boolean existVote2 = true;
-        if(existVote == null && existVote2){
+        if(existVote == null){
             String id = vote.generateUUID();
             vote.setId(id);
             vote.setUserId(userId);
+            jsonProducer.sendJsonMessage(vote);
             return repository.save(vote);
         }
         else{
             throw new ResponseStatusException(HttpStatus.CONFLICT,"You have already voted on this review");
         }
     }
-
-
 }

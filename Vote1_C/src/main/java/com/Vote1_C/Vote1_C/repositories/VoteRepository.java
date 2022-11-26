@@ -1,7 +1,5 @@
 package com.Vote1_C.Vote1_C.repositories;
 
-
-
 import com.Vote1_C.Vote1_C.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

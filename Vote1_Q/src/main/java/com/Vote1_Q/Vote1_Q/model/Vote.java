@@ -1,9 +1,6 @@
 package com.Vote1_Q.Vote1_Q.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "vote")
@@ -20,8 +17,6 @@ public class Vote {
     private Long userId;
 
     @Id
-    @GeneratedValue(generator = "idGenerator")
-    @GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID", nullable = false, length = 36)
     private String id;
 

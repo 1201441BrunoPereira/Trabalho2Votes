@@ -1,4 +1,4 @@
-package com.Vote1_C.Vote1_C.security;
+package com.Vote2_Q.Vote2_Q.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {

@@ -1,11 +1,11 @@
-package com.Vote1_Q.Vote1_Q.controller;
+package com.Vote2_Q.Vote2_Q.controller;
 
-import com.Vote1_Q.Vote1_Q.model.Vote;
-import com.Vote1_Q.Vote1_Q.service.VoteService;
+import com.Vote2_Q.Vote2_Q.model.Vote;
+import com.Vote2_Q.Vote2_Q.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/votes")
@@ -17,7 +17,7 @@ public class VoteController {
     public List<Vote> getAllVotes(){return service.getAllVotes();}
 
     @GetMapping(value = "/{reviewId}/")
-    public int getTotalVotesByReviewId(@PathVariable("reviewId") final String reviewId ) throws IOException, InterruptedException {
+    public int getTotalVotesByReviewId(@PathVariable("reviewId") final String reviewId ){
         return service.getTotalVotesByReviewId(reviewId);
     }
 

@@ -1,7 +1,7 @@
-package com.Vote1_C.Vote1_C.model;
+package com.Vote2_Q.Vote2_Q.model;
 
 import javax.persistence.*;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "vote")
@@ -9,7 +9,6 @@ public class Vote {
 
     @Column
     private String reviewId;
-
 
     @Column
     private boolean vote;
@@ -23,6 +22,7 @@ public class Vote {
 
     public Vote() {
     }
+
     public String getReviewId() {
         return reviewId;
     }
@@ -53,12 +53,6 @@ public class Vote {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public static String generateUUID(){
-        UUID Uuid = UUID.randomUUID();
-        String id = Uuid.toString();
-        return  id;
     }
 
     public Vote(String reviewId, boolean vote) {

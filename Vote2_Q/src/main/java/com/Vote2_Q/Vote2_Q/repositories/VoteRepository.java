@@ -1,6 +1,6 @@
-package com.Vote1_Q.Vote1_Q.repositories;
+package com.Vote2_Q.Vote2_Q.repositories;
 
-import com.Vote1_Q.Vote1_Q.model.Vote;
+import com.Vote2_Q.Vote2_Q.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,5 +20,4 @@ public interface VoteRepository extends JpaRepository<Vote, String> {
 
     @Query("SELECT v FROM Vote v WHERE v.id = :voteId")
     Vote findVoteById(String voteId);
-
 }
