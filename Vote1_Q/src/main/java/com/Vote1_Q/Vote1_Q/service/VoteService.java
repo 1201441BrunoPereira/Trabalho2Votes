@@ -13,20 +13,6 @@ public class VoteService {
     @Autowired
     private VoteRepository repository;
 
-    public int getTotalVotesByReviewId(String reviewId){
-        List<Vote> list;
-        //int votesAPI2 = vote2Repository.getTotalVotesByReviewId(reviewId);
-        list = repository.findId(reviewId);
-        int sizeList = list.size();
-        int votes = 0;
-        for (int i=0; i<sizeList; i++){
-            if(list.get(i).isVote()){
-                votes++;
-            }
-        }
-        return votes;
-    }
-
     public Vote getVoteByReviewIdAndUserId(String reviewId, Long userId){
         Vote existVote = repository.findReviewIdAndUserId(reviewId, userId);
         if(existVote != null){
