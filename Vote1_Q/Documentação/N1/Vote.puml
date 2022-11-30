@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "User" as User
+participant ":UIVote_Q" as vote1
+
+activate User
+
+
+User -> vote1: GET/votes/{reviewId}/{userId}
+vote1 --> User: Vote
+User -> vote1: GET/votes
+vote1 --> User: List<Vote>
+User -> vote1: GET/votes/{voteId}
+vote1 --> User: Vote
+@enduml

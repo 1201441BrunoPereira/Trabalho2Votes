@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+participant ":UIVote_C" as vote
+participant ":AMQP Broker" as bro
+participant ":Vote_C" as vote1
+participant ":Review_Q" as Rev
+
+vote -> vote1: POST/votes/updateVote
+vote1 -> Rev: GET/8084/reviews/status/{reviewId}
+Rev --> vote1 : APPROVED
+vote1 --> vote: vote
+vote1 -->bro: vote.created
+
+@enduml

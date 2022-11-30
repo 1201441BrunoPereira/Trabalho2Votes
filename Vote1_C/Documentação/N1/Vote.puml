@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "User" as User
+participant ":UIVote_C" as vote1
+
+activate User
+
+User -> vote1: POST/votes/updateVote
+vote1 --> User: vote
+
+@enduml
