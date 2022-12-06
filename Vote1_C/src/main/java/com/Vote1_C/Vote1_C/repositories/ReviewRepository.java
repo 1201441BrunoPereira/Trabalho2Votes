@@ -1,32 +1,18 @@
 package com.Vote1_C.Vote1_C.repositories;
 
+import com.Vote1_C.Vote1_C.model.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+
+import java.util.Optional;
+
+;
 
 @Repository
-public class ReviewRepository {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    public Boolean isApproved(String reviewId) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create("http://localhost:8084/reviews/status/" + reviewId))
-                .build();
-
-        HttpResponse response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        var code = response.statusCode();
-        if(code == 200){
-            String statusReview = response.body().toString();
-            if(statusReview.equals("APPROVED")) {
-                return true;
-            }
-        }
-        return false;
-    }
+    @Query("SELECT r.isApproved FROM Review r WHERE r.reviewId = :reviewId")
+    Optional<Boolean> isVoted(@Param("reviewId") String reviewId);
 }

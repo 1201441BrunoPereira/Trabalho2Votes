@@ -4,6 +4,7 @@ package com.Vote1_C.Vote1_C.service;
 import com.Vote1_C.Vote1_C.RabbitMQ.RabbitMQPublisher;
 import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.repositories.ReviewRepository;
+import com.Vote1_C.Vote1_C.repositories.ReviewRepositoryHttp;
 import com.Vote1_C.Vote1_C.repositories.VoteRepository;
 import com.Vote1_C.Vote1_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,8 +29,8 @@ public class VoteService {
     @Autowired
     private RabbitMQPublisher jsonProducer;
 
-    public boolean voteReviewApproved (Vote vote) throws IOException, InterruptedException {
-        return reviewRepository.isApproved(vote.getReviewId());
+    public boolean voteReviewApproved (Vote vote) {
+        return reviewRepository.isVoted(vote.getReviewId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Review not found"));
     }
 
     public Vote updateVoteReview(Vote vote) throws JsonProcessingException {
