@@ -1,9 +1,6 @@
 package com.Vote1_C.Vote1_C.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "review")
@@ -16,8 +13,8 @@ public class Review {
     private boolean isApproved;
 
     @Id
-    @Column(name = "ID", nullable = false, length = 36)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     public Review() {
 
@@ -39,17 +36,11 @@ public class Review {
         isApproved = approved;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Review(String reviewId, boolean isApproved) {
+    public static Review newReview(String reviewId, boolean isApproved) {
         final Review rv = new Review();
         rv.setApproved(isApproved);
         rv.setReviewId(reviewId);
+        return rv;
     }
 }

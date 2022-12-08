@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-;
-
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT r.isApproved FROM Review r WHERE r.reviewId = :reviewId")
     Optional<Boolean> isVoted(@Param("reviewId") String reviewId);
+
+    @Query("SELECT r FROM Review r WHERE r.reviewId = :reviewId")
+    Review findByReviewId(@Param("reviewId") String reviewId);
 }

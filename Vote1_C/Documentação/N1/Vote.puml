@@ -5,7 +5,7 @@ autoactivate on
 autonumber
 
 actor "User" as User
-participant ":UIVote_C" as vote1
+participant ":APIVote_C" as vote1
 
 activate User
 

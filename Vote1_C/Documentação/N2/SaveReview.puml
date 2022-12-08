@@ -4,10 +4,11 @@
 autoactivate on
 autonumber
 
-participant ":Vote_C" as vote
 participant ":AMQP Broker" as bro
+participant ":Vote_C" as vote
 
-vote -> bro: vote.created
-bro --> vote
+
+bro -> vote: review.created
+vote --> bro
 
 @enduml
