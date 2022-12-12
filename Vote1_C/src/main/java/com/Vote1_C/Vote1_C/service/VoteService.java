@@ -4,7 +4,6 @@ package com.Vote1_C.Vote1_C.service;
 import com.Vote1_C.Vote1_C.RabbitMQ.RabbitMQPublisher;
 import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.repositories.ReviewRepository;
-import com.Vote1_C.Vote1_C.repositories.ReviewRepositoryHttp;
 import com.Vote1_C.Vote1_C.repositories.VoteRepository;
 import com.Vote1_C.Vote1_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.io.IOException;
 
 @Service
 public class VoteService {
