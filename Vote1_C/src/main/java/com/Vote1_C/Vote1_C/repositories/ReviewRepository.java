@@ -13,4 +13,7 @@ public interface ReviewRepository extends JpaRepository<ReviewDTO, String> {
 
     @Query("SELECT r.isApproved FROM ReviewDTO r WHERE r.reviewId = :reviewId")
     Optional<Boolean> isVoted(@Param("reviewId") String reviewId);
+
+    @Query("SELECT r FROM Review r WHERE r.reviewId = :reviewId")
+    Review findByReviewId(@Param("reviewId") String reviewId);
 }
