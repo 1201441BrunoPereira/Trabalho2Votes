@@ -2,6 +2,8 @@ package com.Vote2_Q.Vote2_Q.service;
 
 import com.Vote2_Q.Vote2_Q.model.Vote;
 import com.Vote2_Q.Vote2_Q.Interefaces.repositories.VoteRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,11 @@ public class VoteService {
 
     public Vote getVoteById(String voteId){
         return repository.findVoteById(voteId);
+    }
+
+    public void createVote(String vote) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Vote vt = objectMapper.readValue(vote, Vote.class);
+        repository.save(vt);
     }
 }

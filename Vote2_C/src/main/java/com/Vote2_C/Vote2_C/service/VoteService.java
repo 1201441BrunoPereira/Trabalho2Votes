@@ -6,6 +6,7 @@ import com.Vote2_C.Vote2_C.Interfaces.repositories.VoteRepository;
 import com.Vote2_C.Vote2_C.model.Vote;
 import com.Vote2_C.Vote2_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,11 @@ public class VoteService {
         else{
             throw new ResponseStatusException(HttpStatus.CONFLICT,"You have already voted on this review");
         }
+    }
+
+    public void createVote(String vote) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Vote vt = objectMapper.readValue(vote, Vote.class);
+        repository.save(vt);
     }
 }
