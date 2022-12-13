@@ -1,7 +1,7 @@
 package com.Vote1_Q.Vote1_Q.service;
 
 import com.Vote1_Q.Vote1_Q.model.Vote;
-import com.Vote1_Q.Vote1_Q.repositories.VoteRepository;
+import com.Vote1_Q.Vote1_Q.Interfaces.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

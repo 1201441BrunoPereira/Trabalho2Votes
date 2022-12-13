@@ -1,10 +1,10 @@
-package com.Vote1_C.Vote1_C.service;
+package com.Vote2_C.Vote2_C.service;
 
-import com.Vote1_C.Vote1_C.Interfaces.RabbitMQ.RabbitMQPublisher;
-import com.Vote1_C.Vote1_C.model.Vote;
-import com.Vote1_C.Vote1_C.Interfaces.repositories.ReviewRepository;
-import com.Vote1_C.Vote1_C.Interfaces.repositories.VoteRepository;
-import com.Vote1_C.Vote1_C.security.JwtUtils;
+import com.Vote2_C.Vote2_C.Interfaces.RabbitMQ.RabbitMQPublisher;
+import com.Vote2_C.Vote2_C.Interfaces.repositories.ReviewRepository;
+import com.Vote2_C.Vote2_C.Interfaces.repositories.VoteRepository;
+import com.Vote2_C.Vote2_C.model.Vote;
+import com.Vote2_C.Vote2_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
