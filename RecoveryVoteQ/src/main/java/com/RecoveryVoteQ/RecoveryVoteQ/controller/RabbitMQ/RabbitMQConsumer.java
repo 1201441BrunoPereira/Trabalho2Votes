@@ -18,4 +18,10 @@ public class RabbitMQConsumer {
         System.out.println("Creating new vote in Database with id:" + vote);
     }
 
+    @RabbitListener(queues = "voteQRecovery.request")
+    public String voteRecovery(String message) throws JsonProcessingException {
+        System.out.println(" [x] Received request for vote recovery");
+        return voteService.getVotes();
+    }
+
 }

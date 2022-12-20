@@ -67,4 +67,20 @@ public class RabbitMQConfig {
     public Binding binding3(FanoutExchange fanoutReviewApproved, Queue autoDeleteQueue3) {
         return BindingBuilder.bind(autoDeleteQueue3).to(fanoutReviewApproved);
     }
+
+    @Bean
+    public DirectExchange exchange() {
+        return new DirectExchange("voteCRecovery.request");
+    }
+
+    @Bean
+    public Queue queue() {
+        return new Queue("voteCRecovery.request");
+    }
+
+    @Bean
+    public Binding binding6(DirectExchange exchange,
+                            Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("rpc");
+    }
 }

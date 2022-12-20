@@ -21,4 +21,20 @@ public class RabbitMQConfig {
     public Binding binding(FanoutExchange fanout, Queue autoDeleteQueue) {
         return BindingBuilder.bind(autoDeleteQueue).to(fanout);
     }
+
+    @Bean
+    public DirectExchange exchange() {
+        return new DirectExchange("voteQRecovery.request");
+    }
+
+    @Bean
+    public Queue queue() {
+        return new Queue("voteQRecovery.request");
+    }
+
+    @Bean
+    public Binding binding6(DirectExchange exchange,
+                            Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("rpc");
+    }
 }

@@ -3,6 +3,8 @@ package com.RecoveryVoteC.RecoveryVoteC.controller.RabbitMQ;
 import com.RecoveryVoteC.RecoveryVoteC.service.ReviewService;
 import com.RecoveryVoteC.RecoveryVoteC.service.VoteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,16 @@ public class RabbitMQConsumer {
     public void consumeJsonMessageApproveReview(String review){
         reviewService.saveReview(review);
         System.out.println("Review created:" + review);
+    }
+
+    @RabbitListener(queues = "voteCRecovery.request")
+    public String voteRecovery(String message) throws JsonProcessingException {
+        if(message.equals("Vote")){
+            System.out.println(" [x] Received request for vote recovery");
+            return voteService.getVotes();
+        }else{
+            System.out.println(" [x] Received request for review recovery");
+            return reviewService.getReviews();
+        }
     }
 }

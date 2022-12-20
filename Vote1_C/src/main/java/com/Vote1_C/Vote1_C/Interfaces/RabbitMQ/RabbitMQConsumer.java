@@ -2,12 +2,11 @@ package com.Vote1_C.Vote1_C.Interfaces.RabbitMQ;
 
 import com.Vote1_C.Vote1_C.Interfaces.repositories.ReviewRepository;
 import com.Vote1_C.Vote1_C.Interfaces.repositories.VoteRepository;
-import com.Vote1_C.Vote1_C.model.ReviewDTO;
-import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.service.ReviewService;
 import com.Vote1_C.Vote1_C.service.VoteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,4 +50,6 @@ public class RabbitMQConsumer {
         reviewService.saveReview(review);
         System.out.println("Review created:" + review);
     }
+
+
 }

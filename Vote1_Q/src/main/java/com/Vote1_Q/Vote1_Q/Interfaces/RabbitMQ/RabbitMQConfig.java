@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Bean
+    public DirectExchange exchange() {
+        return new DirectExchange("voteQRecovery.request");
+    }
+
+    @Bean
     public FanoutExchange fanout() {
         return new FanoutExchange("vote.created");
     }

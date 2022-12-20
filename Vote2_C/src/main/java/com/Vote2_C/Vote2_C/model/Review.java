@@ -1,4 +1,4 @@
-package com.Vote1_C.Vote1_C.model;
+package com.Vote2_C.Vote2_C.model;
 
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "review")
-public class ReviewDTO {
+public class Review {
 
     @Id
     @Column(name = "ID", nullable = false, length = 36)
@@ -19,11 +19,11 @@ public class ReviewDTO {
     @Column
     private boolean isApproved;
 
-    public ReviewDTO() {
+    public Review() {
 
     }
 
-    public ReviewDTO(String reviewId, boolean isApproved) {
+    public Review(String reviewId, boolean isApproved) {
         this.reviewId = reviewId;
         this.isApproved = isApproved;
     }
@@ -44,19 +44,19 @@ public class ReviewDTO {
         isApproved = approved;
     }
 
-    public static ReviewDTO readJson(String json){
-        ReviewDTO reviewDTO = new ReviewDTO();
+    public static Review readJson(String json){
+        Review review = new Review();
         try{
 
             JSONObject object = new JSONObject(json);
-            reviewDTO.setApproved(Objects.equals(object.getString("status"), "APPROVED"));
-            reviewDTO.setReviewId(object.getString("reviewId"));
+            review.setApproved(Objects.equals(object.getString("status"), "APPROVED"));
+            review.setReviewId(object.getString("reviewId"));
 
         }catch(Exception e) {
             System.out.println("Error in Result as " + e);
         }
 
-        return reviewDTO;
+        return review;
     }
 
 }

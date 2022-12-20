@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface VoteRepository extends JpaRepository<Vote, String> {
 
-
+    @Query("SELECT v FROM Vote v")
+    List<Vote> getAllVotes();
 
 }
