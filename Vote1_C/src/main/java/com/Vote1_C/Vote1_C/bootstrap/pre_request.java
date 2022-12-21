@@ -26,8 +26,6 @@ public class pre_request {
     @Autowired
     private DirectExchange exchange;
 
-    //int start = 0;
-
    @EventListener(ContextRefreshedEvent.class)
     public void run() throws JsonProcessingException {
        System.out.println(" [x] Requesting review from recovery system");
@@ -35,7 +33,7 @@ public class pre_request {
        voteService.updateDataBaseVote(response);
        System.out.println(" [.] Got '" + response + "'");
        System.out.println(" [x] Requesting product from recovery system");
-       String responseReview = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Product");
+       String responseReview = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Review");
        reviewService.updateDataBaseReview(responseReview);
        System.out.println(" [.] Got '" + responseReview + "'");
     }

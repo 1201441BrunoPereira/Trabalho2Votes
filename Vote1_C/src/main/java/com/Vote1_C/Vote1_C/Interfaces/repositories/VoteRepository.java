@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface VoteRepository extends JpaRepository<Vote, Long> {
+public interface VoteRepository extends JpaRepository<Vote, String> {
 
     @Query("SELECT v FROM Vote v WHERE v.reviewId = :reviewId AND v.userId = :userId")
     Vote findReviewIdAndUserId(String reviewId, Long userId);
-
 
 }
