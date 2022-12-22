@@ -1,21 +1,16 @@
 package com.Vote1_C.Vote1_C.Interfaces.RabbitMQ;
 
-import com.Vote1_C.Vote1_C.Interfaces.repositories.ReviewRepository;
-import com.Vote1_C.Vote1_C.Interfaces.repositories.VoteRepository;
 import com.Vote1_C.Vote1_C.service.ReviewService;
+import com.Vote1_C.Vote1_C.service.TemporaryVoteService;
 import com.Vote1_C.Vote1_C.service.VoteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RabbitMQConsumer {
-
-    @Autowired
-    private ReviewRepository reviewRepository;
 
     @Autowired
     private ReviewService reviewService;
@@ -24,7 +19,8 @@ public class RabbitMQConsumer {
     private VoteService voteService;
 
     @Autowired
-    private VoteRepository voteRepository;
+    private TemporaryVoteService temporaryVoteService;
+
 
     @RabbitListener(queues = "#{autoDeleteQueue.name}")
     public void consumeJsonMessage(String vote) throws JsonProcessingException {
@@ -46,8 +42,9 @@ public class RabbitMQConsumer {
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue3.name}")
-    public void consumeJsonMessageApproveReview(String review){
+    public void consumeJsonMessageApproveReview(String review) throws JSONException, JsonProcessingException {
         reviewService.saveReview(review);
+        temporaryVoteService.createFromTemp(review);
         System.out.println("Review created:" + review);
     }
 

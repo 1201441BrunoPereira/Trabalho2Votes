@@ -1,14 +1,16 @@
 package com.Vote1_C.Vote1_C.service;
 
 import com.Vote1_C.Vote1_C.Interfaces.RabbitMQ.RabbitMQPublisher;
-import com.Vote1_C.Vote1_C.Interfaces.repositories.ReviewRepository;
 import com.Vote1_C.Vote1_C.Interfaces.repositories.TemporaryVoteRepository;
+import com.Vote1_C.Vote1_C.Interfaces.repositories.VoteRepository;
 import com.Vote1_C.Vote1_C.VoteDTO;
 import com.Vote1_C.Vote1_C.model.TemporaryVote;
 import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,6 +23,9 @@ public class TemporaryVoteService {
 
     @Autowired
     private TemporaryVoteRepository repository;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Autowired
     private RabbitMQPublisher jsonProducer;
@@ -40,4 +45,21 @@ public class TemporaryVoteService {
         jsonProducer.sendJsonMessageToReview(vote);
         return tempVote;
     }
+
+    public void createFromTemp(String review) throws JSONException, JsonProcessingException {
+        JSONObject object = new JSONObject(review);
+        String voteId = object.getString("voteIdIfCreatedFromVote");
+        if(voteId != null){
+            TemporaryVote temporaryVote = repository.getTemporaryVoteById(voteId);
+            Vote vote = new Vote();
+            vote.setId(Vote.generateUUID());
+            vote.setVote(temporaryVote.isVote());
+            vote.setUserId(temporaryVote.getUserId());
+            vote.setReviewId(object.getString("reviewId"));
+            voteRepository.save(vote);
+            repository.delete(temporaryVote);
+            jsonProducer.sendJsonMessage(vote);
+        }
+    }
+
 }

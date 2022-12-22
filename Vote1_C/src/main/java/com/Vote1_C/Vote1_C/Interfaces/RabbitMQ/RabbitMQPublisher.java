@@ -2,6 +2,7 @@ package com.Vote1_C.Vote1_C.Interfaces.RabbitMQ;
 
 import com.Vote1_C.Vote1_C.VoteDTO;
 import com.Vote1_C.Vote1_C.model.Vote;
+import com.Vote1_C.Vote1_C.service.EmailConfigImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -22,6 +23,9 @@ public class RabbitMQPublisher {
     @Autowired
     private FanoutExchange fanoutTempVote;
 
+    @Autowired
+    private EmailConfigImpl emailConfig;
+
     public void sendJsonMessage(Vote vote) throws JsonProcessingException {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
@@ -32,6 +36,7 @@ public class RabbitMQPublisher {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
         template.convertAndSend(fanoutTempVote.getName(), "", json);
+        emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Olha lá que esta merda funciona","Estado da coisa");
     }
 
 }
