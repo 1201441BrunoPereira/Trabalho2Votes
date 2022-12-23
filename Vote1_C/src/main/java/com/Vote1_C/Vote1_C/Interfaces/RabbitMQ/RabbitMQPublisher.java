@@ -36,7 +36,7 @@ public class RabbitMQPublisher {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
         template.convertAndSend(fanoutTempVote.getName(), "", json);
-        emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Olha lá que esta merda funciona","Estado da coisa");
+        emailConfig.sendSimpleMail("1220413@isep.ipp.pt","Olha lá que esta merda funciona","Estado da coisa");
     }
 
 }

@@ -35,7 +35,6 @@ public class ReviewService {
 
             for(int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject1 = array.getJSONObject(i);
-
                 ObjectMapper objectMapper = new ObjectMapper();
                 Review rv = objectMapper.readValue(jsonObject1.toString(), Review.class);
                 System.out.println("RV: " + rv.getReviewId());
@@ -45,5 +44,10 @@ public class ReviewService {
         }catch(Exception e) {
             System.out.println("Error in Result as " + e.toString());
         }
+    }
+
+    public boolean checkStatusReview(String review){
+        Review reviewDTO = Review.readJson(review);
+        return reviewDTO.isApproved();
     }
 }

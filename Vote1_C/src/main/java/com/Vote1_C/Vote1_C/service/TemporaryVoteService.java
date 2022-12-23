@@ -28,6 +28,12 @@ public class TemporaryVoteService {
     private VoteRepository voteRepository;
 
     @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private EmailConfigImpl emailConfig;
+
+    @Autowired
     private RabbitMQPublisher jsonProducer;
 
     public TemporaryVote updateVoteProduct(VoteDTO vote) throws JsonProcessingException {
@@ -51,14 +57,29 @@ public class TemporaryVoteService {
         String voteId = object.getString("voteIdIfCreatedFromVote");
         if(voteId != null){
             TemporaryVote temporaryVote = repository.getTemporaryVoteById(voteId);
-            Vote vote = new Vote();
-            vote.setId(Vote.generateUUID());
-            vote.setVote(temporaryVote.isVote());
-            vote.setUserId(temporaryVote.getUserId());
-            vote.setReviewId(object.getString("reviewId"));
-            voteRepository.save(vote);
+            if(reviewService.checkStatusReview(review)){
+                Vote vote = new Vote();
+                vote.setId(Vote.generateUUID());
+                vote.setVote(temporaryVote.isVote());
+                vote.setUserId(temporaryVote.getUserId());
+                vote.setReviewId(object.getString("reviewId"));
+                voteRepository.save(vote);
+                repository.delete(temporaryVote);
+                jsonProducer.sendJsonMessage(vote);
+            }else{
+                repository.delete(temporaryVote);
+            }
+
+        }
+    }
+
+    public void deleteFromTemp(String tempVoteId) throws JSONException, JsonProcessingException {
+        tempVoteId = tempVoteId.substring(1, tempVoteId.length() - 1);
+        System.out.println("vote: " + tempVoteId);
+        if(tempVoteId != null){
+            TemporaryVote temporaryVote = repository.getTemporaryVoteById(tempVoteId);
+            emailConfig.sendSimpleMail("giovannafantacini@gmail.com","Erro criação review","Fail");
             repository.delete(temporaryVote);
-            jsonProducer.sendJsonMessage(vote);
         }
     }
 
