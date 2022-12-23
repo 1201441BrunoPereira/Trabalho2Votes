@@ -54,9 +54,8 @@ public class TemporaryVoteService {
 
     public void createFromTemp(String review) throws JSONException, JsonProcessingException {
         JSONObject object = new JSONObject(review);
-        String voteId = object.getString("voteIdIfCreatedFromVote");
-        if(voteId != null){
-            TemporaryVote temporaryVote = repository.getTemporaryVoteById(voteId);
+        if(!object.isNull("voteIdIfCreatedFromVote")){
+            TemporaryVote temporaryVote = repository.getTemporaryVoteById(object.getString("voteIdIfCreatedFromVote"));
             if(reviewService.checkStatusReview(review)){
                 Vote vote = new Vote();
                 vote.setId(Vote.generateUUID());
@@ -66,21 +65,23 @@ public class TemporaryVoteService {
                 voteRepository.save(vote);
                 repository.delete(temporaryVote);
                 jsonProducer.sendJsonMessage(vote);
+                emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Your vote  was automatic created ","Vote Status");
             }else{
                 repository.delete(temporaryVote);
+                emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Your vote  was deleted because your review was rejected ","Vote Status");
+
             }
 
         }
     }
 
-    public void deleteFromTemp(String tempVoteId) throws JSONException, JsonProcessingException {
+    public void deleteFromTemp(String tempVoteId){
         tempVoteId = tempVoteId.substring(1, tempVoteId.length() - 1);
-        System.out.println("vote: " + tempVoteId);
-        if(tempVoteId != null){
-            TemporaryVote temporaryVote = repository.getTemporaryVoteById(tempVoteId);
-            emailConfig.sendSimpleMail("giovannafantacini@gmail.com","Erro criação review","Fail");
-            repository.delete(temporaryVote);
-        }
+        System.out.println("Deleting vote with id: " + tempVoteId + "because selected product does not exist");
+        TemporaryVote temporaryVote = repository.getTemporaryVoteById(tempVoteId);
+        emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Erro criação review, o produto escolhido não existe","Fail to create vote");
+        repository.delete(temporaryVote);
+
     }
 
 }

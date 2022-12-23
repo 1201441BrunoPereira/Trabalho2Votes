@@ -19,9 +19,16 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public void saveReview(String review){
+    @Autowired
+    private EmailConfigImpl emailConfig;
+
+    public void saveReview(String review,boolean createdAlready) throws JSONException {
         Review reviewDTO = Review.readJson(review);
         reviewRepository.save(reviewDTO);
+        JSONObject object = new JSONObject(review);
+        if (!object.isNull("voteIdIfCreatedFromVote") && !createdAlready){
+            emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Your vote  will be automatic  created if your review is approved by a moderator ","Vote Status");
+        }
     }
 
     public void deleteReview(String review){
@@ -29,7 +36,7 @@ public class ReviewService {
         reviewRepository.delete(reviewDTO);
     }
 
-    public void updateDataBaseReview(String review) throws JsonProcessingException {
+    public void updateDataBaseReview(String review){
         try{
             JSONArray array = new JSONArray(review);
 

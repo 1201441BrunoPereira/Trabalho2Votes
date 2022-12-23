@@ -23,9 +23,6 @@ public class RabbitMQPublisher {
     @Autowired
     private FanoutExchange fanoutTempVote;
 
-    @Autowired
-    private EmailConfigImpl emailConfig;
-
     public void sendJsonMessage(Vote vote) throws JsonProcessingException {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
@@ -36,7 +33,6 @@ public class RabbitMQPublisher {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
         template.convertAndSend(fanoutTempVote.getName(), "", json);
-        emailConfig.sendSimpleMail("1220413@isep.ipp.pt","Olha lá que esta merda funciona","Estado da coisa");
     }
 
 }

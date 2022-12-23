@@ -30,8 +30,8 @@ public class RabbitMQConsumer {
 
 
     @RabbitListener(queues = "#{autoDeleteQueue1.name}")
-    public void consumeJsonMessageCreateReview(String review){
-        reviewService.saveReview(review);
+    public void consumeJsonMessageCreateReview(String review) throws JSONException {
+        reviewService.saveReview(review,false);
         System.out.println("Review created:" + review);
     }
 
@@ -43,13 +43,13 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "#{autoDeleteQueue3.name}")
     public void consumeJsonMessageApproveReview(String review) throws JSONException, JsonProcessingException {
-        reviewService.saveReview(review);
+        reviewService.saveReview(review,true);
         temporaryVoteService.createFromTemp(review);
         System.out.println("Review created:" + review);
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue4.name}")
-    public void consumeJsonMessageToDeleteVoteFromReview(String tempVoteId) throws JSONException, JsonProcessingException {
+    public void consumeJsonMessageToDeleteVoteFromReview(String tempVoteId){
         temporaryVoteService.deleteFromTemp(tempVoteId);
         System.out.println("Delete temp vote:" + tempVoteId);
     }
