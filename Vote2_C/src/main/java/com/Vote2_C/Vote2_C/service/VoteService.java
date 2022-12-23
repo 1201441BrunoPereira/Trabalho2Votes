@@ -61,7 +61,6 @@ public class VoteService {
     public void updateDataBaseVote(String vote) throws JsonProcessingException {
         try{
             JSONArray array = new JSONArray(vote);
-
             for(int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject1 = array.getJSONObject(i);
 
@@ -75,4 +74,6 @@ public class VoteService {
             System.out.println("Error in Result as " + e.toString());
         }
     }
+
+
 }

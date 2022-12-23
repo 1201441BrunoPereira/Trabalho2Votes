@@ -47,7 +47,6 @@ public class Review {
     public static Review readJson(String json){
         Review review = new Review();
         try{
-
             JSONObject object = new JSONObject(json);
             review.setApproved(Objects.equals(object.getString("status"), "APPROVED"));
             review.setReviewId(object.getString("reviewId"));

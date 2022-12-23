@@ -7,12 +7,8 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "vote")
-public class Vote {
-
-    @Column
-    private String reviewId;
-
+@Table(name = "temporaryVote")
+public class TemporaryVote {
 
     @Column
     private boolean vote;
@@ -24,14 +20,10 @@ public class Vote {
     @Column(name = "ID", nullable = false, length = 36)
     private String id;
 
-    public Vote() {
-    }
-    public String getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(String uuidReview) {
-        this.reviewId = uuidReview;
+    public static String generateUUID(){
+        UUID Uuid = UUID.randomUUID();
+        String id = Uuid.toString();
+        return  id;
     }
 
     public boolean isVote() {
@@ -42,14 +34,6 @@ public class Vote {
         this.vote = vote;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -58,15 +42,20 @@ public class Vote {
         this.userId = userId;
     }
 
-    public static String generateUUID(){
-        UUID Uuid = UUID.randomUUID();
-        String id = Uuid.toString();
-        return  id;
+    public String getId() {
+        return id;
     }
 
-    public Vote(String reviewId, boolean vote) {
-        this.reviewId = reviewId;
+    public void setId() {
+        this.id = generateUUID();
+    }
+
+    public TemporaryVote() {
+    }
+
+    public TemporaryVote(boolean vote, Long userId) {
         this.vote = vote;
+        this.userId = userId;
+        setId();
     }
-
 }
