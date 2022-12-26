@@ -2,6 +2,7 @@ package com.Vote2_C.Vote2_C.Interfaces.RabbitMQ;
 
 import com.Vote2_C.Vote2_C.VoteDTO;
 import com.Vote2_C.Vote2_C.model.Vote;
+import com.Vote2_C.Vote2_C.model.TemporaryVote;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -21,6 +22,12 @@ public class RabbitMQPublisher {
     private FanoutExchange fanout;
 
     @Autowired
+    private FanoutExchange fanoutTempVote;
+
+    @Autowired
+    private FanoutExchange fanoutTempVoteDelete;
+
+    @Autowired
     private Queue queueTempVote;
 
     public void sendJsonMessage(Vote vote) throws JsonProcessingException {
@@ -33,6 +40,16 @@ public class RabbitMQPublisher {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
         template.convertAndSend(queueTempVote.getName(), json);
+    }
+
+    public void sendJsonMessageToCreateTempVote(TemporaryVote vote) throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(vote);
+        template.convertAndSend(fanoutTempVote.getName(), "", json);
+    }
+
+    public void sendJsonMessageToDeleteTempVote(String tempVoteId) throws JsonProcessingException {
+        template.convertAndSend(fanoutTempVoteDelete.getName(), "", tempVoteId);
     }
 
 }

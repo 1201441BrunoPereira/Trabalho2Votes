@@ -49,7 +49,7 @@ public class RabbitMQConsumer {
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue4.name}")
-    public void consumeJsonMessageToDeleteVoteFromReview(String tempVoteId){
+    public void consumeJsonMessageToDeleteVoteFromReview(String tempVoteId) throws JsonProcessingException {
         temporaryVoteService.deleteFromTemp(tempVoteId);
         System.out.println("Delete temp vote:" + tempVoteId);
     }
