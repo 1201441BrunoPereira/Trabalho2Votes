@@ -8,7 +8,6 @@ import com.Vote1_C.Vote1_C.model.TemporaryVote;
 import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -90,6 +89,5 @@ public class TemporaryVoteService {
         }
 
     }
-
 
 }

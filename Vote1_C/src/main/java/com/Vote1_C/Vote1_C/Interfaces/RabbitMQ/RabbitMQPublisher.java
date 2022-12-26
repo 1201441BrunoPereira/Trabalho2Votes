@@ -3,7 +3,6 @@ package com.Vote1_C.Vote1_C.Interfaces.RabbitMQ;
 import com.Vote1_C.Vote1_C.VoteDTO;
 import com.Vote1_C.Vote1_C.model.TemporaryVote;
 import com.Vote1_C.Vote1_C.model.Vote;
-import com.Vote1_C.Vote1_C.service.EmailConfigImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

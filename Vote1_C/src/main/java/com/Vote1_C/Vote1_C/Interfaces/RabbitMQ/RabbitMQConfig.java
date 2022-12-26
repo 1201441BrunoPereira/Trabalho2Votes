@@ -83,7 +83,6 @@ public class RabbitMQConfig {
     }
 
 
-
     @Bean
     public Binding binding1(FanoutExchange fanoutReviewCreated, Queue autoDeleteQueue1) {
         return BindingBuilder.bind(autoDeleteQueue1).to(fanoutReviewCreated);
@@ -103,5 +102,4 @@ public class RabbitMQConfig {
     public Binding binding4(FanoutExchange fanoutDeleteVote, Queue autoDeleteQueue4) {
         return BindingBuilder.bind(autoDeleteQueue4).to(fanoutDeleteVote);
     }
-
 }

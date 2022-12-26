@@ -1,11 +1,9 @@
 package com.Vote1_C.Vote1_C.service;
 
 import com.Vote1_C.Vote1_C.Interfaces.RabbitMQ.RabbitMQPublisher;
-import com.Vote1_C.Vote1_C.VoteDTO;
-import com.Vote1_C.Vote1_C.model.TemporaryVote;
-import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.Interfaces.repositories.ReviewRepository;
 import com.Vote1_C.Vote1_C.Interfaces.repositories.VoteRepository;
+import com.Vote1_C.Vote1_C.model.Vote;
 import com.Vote1_C.Vote1_C.security.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,7 +58,7 @@ public class VoteService {
         repository.save(vt);
     }
 
-    public void updateDataBaseVote(String vote) throws JsonProcessingException {
+    public void updateDataBaseVote(String vote){
         try{
             JSONArray array = new JSONArray(vote);
             for(int i = 0; i < array.length(); i++) {

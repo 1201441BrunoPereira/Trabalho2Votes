@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,8 +31,10 @@ public class VoteService {
         repository.save(vt);
     }
 
-    public String getVotes() throws JsonProcessingException {
-        List<Vote> voteList = repository.getAllVotes();
+    public String getVotes(String message) throws JsonProcessingException {
+        String pageNumber = message.substring(3);
+        int page = Integer.parseInt(pageNumber);
+        List<Vote> voteList = repository.getAllByPage(PageRequest.of(page,10));
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(voteList);
         System.out.println(" Vote:  " + json);

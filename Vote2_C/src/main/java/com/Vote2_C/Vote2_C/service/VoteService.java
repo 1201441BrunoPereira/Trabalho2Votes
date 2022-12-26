@@ -58,7 +58,7 @@ public class VoteService {
         repository.save(vt);
     }
 
-    public void updateDataBaseVote(String vote) throws JsonProcessingException {
+    public void updateDataBaseVote(String vote){
         try{
             JSONArray array = new JSONArray(vote);
             for(int i = 0; i < array.length(); i++) {

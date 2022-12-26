@@ -45,12 +45,13 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "voteCRecovery.request")
     public String voteRecovery(String message) throws JsonProcessingException {
-        if(message.equals("Vote")){
+        String newMessage = message.substring(0,3);
+        if(newMessage.equals("Vot")){
             System.out.println(" [x] Received request for vote recovery");
-            return voteService.getVotes();
+            return voteService.getVotes(message);
         }else{
             System.out.println(" [x] Received request for review recovery");
-            return reviewService.getReviews();
+            return reviewService.getReviews(message);
         }
     }
 }

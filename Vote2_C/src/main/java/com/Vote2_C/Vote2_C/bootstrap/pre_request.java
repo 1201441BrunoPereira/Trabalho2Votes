@@ -9,7 +9,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Component
 public class pre_request {
@@ -26,22 +29,33 @@ public class pre_request {
     @Autowired
     private DirectExchange exchange;
 
-    //int start = 0;
+    int page = 0;
+    int reviewPage = 0;
+    String response;
+    String responseReview;
 
    @EventListener(ContextRefreshedEvent.class)
     public void run() throws JsonProcessingException {
        System.out.println(" [x] Requesting review from recovery system");
-       String response = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Vote");
-       if(response != null){
-           voteService.updateDataBaseVote(response);
-       }
-       System.out.println(" [.] Got '" + response + "'");
+       do {
+           String pageString = String.valueOf(page);
+           response = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Vot"+pageString);
+           if(response != null){
+               voteService.updateDataBaseVote(response);
+           }
+           System.out.println(" [.] Got '" + response + "'");
+           page++;
+       }while (!Objects.equals(response, "[ ]"));
        System.out.println(" [x] Requesting product from recovery system");
-       String responseReview = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Review");
-       if(responseReview != null){
-           reviewService.updateDataBaseReview(responseReview);
-       }
-       System.out.println(" [.] Got '" + responseReview + "'");
+       do {
+           String pageString = String.valueOf(reviewPage);
+           responseReview = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Rev"+pageString);
+           if(responseReview != null){
+               reviewService.updateDataBaseReview(responseReview);
+           }
+           System.out.println(" [.] Got '" + responseReview + "'");
+           reviewPage++;
+       }while (!Objects.equals(responseReview, "[ ]"));
     }
 
 }

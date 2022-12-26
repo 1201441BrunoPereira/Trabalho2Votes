@@ -2,16 +2,12 @@ package com.Vote1_C.Vote1_C.service;
 
 import com.Vote1_C.Vote1_C.Interfaces.repositories.ReviewRepository;
 import com.Vote1_C.Vote1_C.model.Review;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ReviewService {

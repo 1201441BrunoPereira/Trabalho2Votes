@@ -1,7 +1,5 @@
 package com.Vote1_C.Vote1_C.security;
 
-
-
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
