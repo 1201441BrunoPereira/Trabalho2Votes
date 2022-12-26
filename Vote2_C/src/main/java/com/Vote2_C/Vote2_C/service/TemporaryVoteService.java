@@ -80,11 +80,11 @@ public class TemporaryVoteService {
     }
 
     public void deleteFromTemp(String tempVoteId) throws JsonProcessingException {
+        tempVoteId = tempVoteId.substring(1, tempVoteId.length() - 1);
         System.out.println("Deleting vote with id: " + tempVoteId + "because selected product does not exist");
         if(repository.getTemporaryVoteById(tempVoteId) != null){
             TemporaryVote temporaryVote = repository.getTemporaryVoteById(tempVoteId);
             emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Erro criação review, o produto escolhido não existe","Fail to create vote");
-            jsonProducer.sendJsonMessageToDeleteTempVote(temporaryVote.getId());
             repository.delete(temporaryVote);
         }
 

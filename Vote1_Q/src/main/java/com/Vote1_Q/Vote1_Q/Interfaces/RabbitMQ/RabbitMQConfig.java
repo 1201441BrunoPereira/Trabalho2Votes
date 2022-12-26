@@ -1,6 +1,7 @@
 package com.Vote1_Q.Vote1_Q.Interfaces.RabbitMQ;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +29,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public FanoutExchange fanoutDeleteVote() {
+        return new FanoutExchange("reviewVote.deleted");
+    }
+
+    @Bean
     public Queue autoDeleteQueue() {
         return new AnonymousQueue();
     }
@@ -39,6 +45,11 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue autoDeleteQueue3() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public Queue autoDeleteQueue4() {
         return new AnonymousQueue();
     }
 
@@ -56,4 +67,10 @@ public class RabbitMQConfig {
     public Binding binding3(FanoutExchange fanoutTempVoteDelete, Queue autoDeleteQueue3) {
         return BindingBuilder.bind(autoDeleteQueue3).to(fanoutTempVoteDelete);
     }
+
+    @Bean
+    public Binding binding4(FanoutExchange fanoutDeleteVote, Queue autoDeleteQueue4) {
+        return BindingBuilder.bind(autoDeleteQueue4).to(fanoutDeleteVote);
+    }
+
 }

@@ -27,7 +27,9 @@ public class pre_request {
     public void run() throws JsonProcessingException {
        System.out.println(" [x] Requesting review from recovery system");
        String response = (String) template.convertSendAndReceive(exchange.getName(), "rpc", "Vote");
-       voteService.updateDataBaseVote(response);
+       if(response != null){
+           voteService.updateDataBaseVote(response);
+       }
        System.out.println(" [.] Got '" + response + "'");
     }
 

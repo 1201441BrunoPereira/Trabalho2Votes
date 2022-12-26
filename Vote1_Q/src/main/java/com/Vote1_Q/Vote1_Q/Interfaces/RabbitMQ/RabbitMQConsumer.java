@@ -32,7 +32,14 @@ public class RabbitMQConsumer {
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue3.name}")
+    public void consumeJsonMessageToDeleteTempVote(String tempVoteId){
+        temporaryVoteService.deleteFromTemp(tempVoteId);
+        System.out.println("Delete temp vote:" + tempVoteId);
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue4.name}")
     public void consumeJsonMessageToDeleteVoteFromReview(String tempVoteId){
+        tempVoteId = tempVoteId.substring(1, tempVoteId.length() - 1);
         temporaryVoteService.deleteFromTemp(tempVoteId);
         System.out.println("Delete temp vote:" + tempVoteId);
     }
