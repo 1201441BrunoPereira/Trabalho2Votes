@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class RabbitMQPublisher {
     private FanoutExchange fanout;
 
     @Autowired
-    private FanoutExchange fanoutTempVote;
+    private Queue queueTempVote;
 
     public void sendJsonMessage(Vote vote) throws JsonProcessingException {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -32,7 +33,7 @@ public class RabbitMQPublisher {
     public void sendJsonMessageToReview(VoteDTO vote) throws JsonProcessingException {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(vote);
-        template.convertAndSend(fanoutTempVote.getName(), "", json);
+        template.convertAndSend(queueTempVote.getName(), json);
     }
 
 }

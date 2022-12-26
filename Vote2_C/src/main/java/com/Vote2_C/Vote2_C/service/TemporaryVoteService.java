@@ -56,7 +56,7 @@ public class TemporaryVoteService {
         JSONObject object = new JSONObject(review);
         if(!object.isNull("voteIdIfCreatedFromVote")){
             TemporaryVote temporaryVote = repository.getTemporaryVoteById(object.getString("voteIdIfCreatedFromVote"));
-            if(reviewService.checkStatusReview(review)){
+            if(reviewService.checkStatusReview(review) && temporaryVote != null){
                 Vote vote = new Vote();
                 vote.setId(Vote.generateUUID());
                 vote.setVote(temporaryVote.isVote());
@@ -66,10 +66,11 @@ public class TemporaryVoteService {
                 repository.delete(temporaryVote);
                 jsonProducer.sendJsonMessage(vote);
                 emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Your vote  was automatic created ","Vote Status");
-            }else{
-                repository.delete(temporaryVote);
-                emailConfig.sendSimpleMail("1201441@isep.ipp.pt","Your vote  was deleted because your review was rejected ","Vote Status");
-
+            }else {
+                if (temporaryVote != null){
+                    repository.delete(temporaryVote);
+                    emailConfig.sendSimpleMail("1201441@isep.ipp.pt", "Your vote  was deleted because your review was rejected ", "Vote Status");
+                }
             }
 
         }

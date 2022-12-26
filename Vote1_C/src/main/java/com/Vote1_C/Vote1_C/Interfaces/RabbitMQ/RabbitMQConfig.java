@@ -18,8 +18,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public FanoutExchange fanoutTempVote() {
-        return new FanoutExchange("voteReceivedWithoutReview.created");
+    public Queue queueTempVote() {
+        return new Queue("voteReceivedWithoutReview.created");
     }
 
     @Bean
