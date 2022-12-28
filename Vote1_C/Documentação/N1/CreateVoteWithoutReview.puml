@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+autonumber
+
+actor "User" as User
+participant ":APIVote_C" as vc
+participant ":AMQPMessageBroker" as amqp
+participant ":APIReviews_C" as rc
+actor "Admin" as admin
+
+
+
+User --> vc: POST/votes/voteProduct
+activate vc
+vc --> vc: Save(tempVote)
+vc --> amqp: PUBLISH tempVote.created(tempVote)
+activate amqp
+vc --> User: code:202
+deactivate vc
+amqp --> rc: tempVote.created(tempVote)
+deactivate amqp
+activate rc
+rc --> rc: Save(Review)
+rc --> amqp: PUBLISH review.created(review)
+deactivate rc
+activate amqp
+amqp --> vc: review.created(review)
+deactivate amqp
+activate vc
+vc --> User: sendEmail()
+deactivate vc
+admin --> rc: POST/reviews/{{reviewId}}/approve/true
+activate rc
+rc --> admin: ok
+rc --> amqp: PUBLISH review.approved(review)
+deactivate rc
+activate amqp
+amqp --> vc: review.approved(review)
+deactivate amqp
+activate vc
+vc --> vc: Save(Vote)
+vc --> amqp: PUBLISH vote.created(vote)
+activate amqp
+vc --> User: sendEmail()
+deactivate vc
+deactivate User
+amqp --> rc: vote.created(vote)
+deactivate amqp
+activate rc
+rc --> rc: updateReview(vote)
+deactivate rc
+
+@enduml
