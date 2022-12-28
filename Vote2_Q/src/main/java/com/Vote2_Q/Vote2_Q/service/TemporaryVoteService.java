@@ -17,10 +17,8 @@ import java.util.List;
 @Service
 public class TemporaryVoteService {
 
-
     @Autowired
     private TemporaryVoteRepository repository;
-
 
     public void deleteFromTemp(String tempVoteId){
         System.out.println("Deleting vote with id: " + tempVoteId + "because selected product does not exist");
@@ -54,7 +52,7 @@ public class TemporaryVoteService {
         }
     }
 
-    public void updateDataBaseTempVote(String tempVote) throws JsonProcessingException {
+    public void updateDataBaseTempVote(String tempVote) {
         try{
             JSONArray array = new JSONArray(tempVote);
 

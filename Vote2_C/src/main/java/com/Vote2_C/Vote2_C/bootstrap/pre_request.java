@@ -1,15 +1,12 @@
 package com.Vote2_C.Vote2_C.bootstrap;
 
-
 import com.Vote2_C.Vote2_C.service.ReviewService;
 import com.Vote2_C.Vote2_C.service.VoteService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -35,7 +32,7 @@ public class pre_request {
     String responseReview;
 
    @EventListener(ContextRefreshedEvent.class)
-    public void run() throws JsonProcessingException {
+    public void run() {
        System.out.println(" [x] Requesting review from recovery system");
        do {
            String pageString = String.valueOf(page);

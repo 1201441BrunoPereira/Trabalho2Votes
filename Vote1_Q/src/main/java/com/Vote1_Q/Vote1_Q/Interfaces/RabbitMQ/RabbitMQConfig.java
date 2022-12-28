@@ -1,7 +1,6 @@
 package com.Vote1_Q.Vote1_Q.Interfaces.RabbitMQ;
 
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

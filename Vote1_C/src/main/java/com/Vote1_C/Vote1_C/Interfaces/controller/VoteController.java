@@ -38,6 +38,4 @@ public class VoteController {
     public ResponseEntity<TemporaryVote> upVoteProduct(@RequestBody final VoteDTO vote ) throws JsonProcessingException {
         return new ResponseEntity<>(tempVoteService.updateVoteProduct(vote), HttpStatus.ACCEPTED);
     }
-
-
 }

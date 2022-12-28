@@ -1,6 +1,5 @@
 package com.Vote1_C.Vote1_C.bootstrap;
 
-
 import com.Vote1_C.Vote1_C.service.ReviewService;
 import com.Vote1_C.Vote1_C.service.VoteService;
 import com.fasterxml.jackson.core.JsonProcessingException;

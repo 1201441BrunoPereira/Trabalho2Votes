@@ -79,7 +79,7 @@ public class TemporaryVoteService {
         }
     }
 
-    public void deleteFromTemp(String tempVoteId) throws JsonProcessingException {
+    public void deleteFromTemp(String tempVoteId) {
         tempVoteId = tempVoteId.substring(1, tempVoteId.length() - 1);
         System.out.println("Deleting vote with id: " + tempVoteId + "because selected product does not exist");
         if(repository.getTemporaryVoteById(tempVoteId) != null){

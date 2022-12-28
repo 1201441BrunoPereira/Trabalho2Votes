@@ -1,6 +1,5 @@
 package com.Vote2_Q.Vote2_Q.bootstrap;
 
-
 import com.Vote2_Q.Vote2_Q.service.TemporaryVoteService;
 import com.Vote2_Q.Vote2_Q.service.VoteService;
 import com.fasterxml.jackson.core.JsonProcessingException;

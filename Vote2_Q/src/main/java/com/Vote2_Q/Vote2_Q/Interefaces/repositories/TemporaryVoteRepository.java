@@ -1,6 +1,5 @@
 package com.Vote2_Q.Vote2_Q.Interefaces.repositories;
 
-
 import com.Vote2_Q.Vote2_Q.model.TemporaryVote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

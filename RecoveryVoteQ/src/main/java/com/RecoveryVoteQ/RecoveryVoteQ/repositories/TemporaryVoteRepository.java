@@ -1,7 +1,6 @@
 package com.RecoveryVoteQ.RecoveryVoteQ.repositories;
 
 import com.RecoveryVoteQ.RecoveryVoteQ.model.TemporaryVote;
-import com.RecoveryVoteQ.RecoveryVoteQ.model.Vote;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

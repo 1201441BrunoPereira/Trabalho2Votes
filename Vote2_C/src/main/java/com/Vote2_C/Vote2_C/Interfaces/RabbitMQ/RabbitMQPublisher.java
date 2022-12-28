@@ -48,7 +48,7 @@ public class RabbitMQPublisher {
         template.convertAndSend(fanoutTempVote.getName(), "", json);
     }
 
-    public void sendJsonMessageToDeleteTempVote(String tempVoteId) throws JsonProcessingException {
+    public void sendJsonMessageToDeleteTempVote(String tempVoteId) {
         template.convertAndSend(fanoutTempVoteDelete.getName(), "", tempVoteId);
     }
 

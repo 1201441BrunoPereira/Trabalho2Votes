@@ -1,6 +1,5 @@
 package com.Vote1_C.Vote1_C.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

@@ -1,11 +1,8 @@
 package com.Vote2_Q.Vote2_Q.Interefaces.RabbitMQ;
 
-import com.Vote2_Q.Vote2_Q.model.Vote;
-import com.Vote2_Q.Vote2_Q.Interefaces.repositories.VoteRepository;
 import com.Vote2_Q.Vote2_Q.service.TemporaryVoteService;
 import com.Vote2_Q.Vote2_Q.service.VoteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
