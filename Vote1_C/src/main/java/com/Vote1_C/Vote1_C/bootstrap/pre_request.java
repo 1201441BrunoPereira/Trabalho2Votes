@@ -44,7 +44,7 @@ public class pre_request {
            }
            System.out.println(" [.] Got '" + response + "'");
            page++;
-       }while (!Objects.equals(response, "[ ]"));
+       }while (!Objects.equals(response, "[ ]") && !Objects.equals(response, null));
        System.out.println(" [x] Requesting product from recovery system");
        do {
            String pageString = String.valueOf(reviewPage);
@@ -54,7 +54,7 @@ public class pre_request {
            }
            System.out.println(" [.] Got '" + responseReview + "'");
            reviewPage++;
-       }while (!Objects.equals(responseReview, "[ ]"));
+       }while (!Objects.equals(response, "[ ]") && !Objects.equals(response, null));
     }
 
 }
