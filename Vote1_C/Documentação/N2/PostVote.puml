@@ -1,13 +1,57 @@
+
 @startuml
 'https://plantuml.com/sequence-diagram
 
-autoactivate on
+
 autonumber
 
-participant ":Vote_C" as vote
+participant "Vote_C" as vote1
 participant ":AMQP Broker" as bro
+participant "Vote_Q" as votq
+participant ":Review_C" as revc
+participant ":Review_Q" as rev
+participant ":RecoveryReviewQ" as rrq
+participant ":RecoveryReviewC" as rrc
+participant ":RecoveryVoteQ" as rvq
+participant ":RecoveryVoteC" as rvc
 
-vote -> bro: vote.created
-bro --> vote
+
+-> vote1: POST/votes/updateVote
+activate vote1
+vote1 --> vote1 : save vote
+[<- vote1: 201
+vote1 -> bro: PUBLISH vote.created
+deactivate vote1
+activate bro
+bro -> votq: NOTIFY vote.created
+votq --> votq: save vote
+activate votq
+deactivate votq
+bro -> revc: NOTIFY vote.created
+revc --> revc: save vote
+activate revc
+deactivate revc
+bro -> rev: NOTIFY vote.created
+rev --> rev: save vote
+activate rev
+deactivate rev
+bro -> rrq: NOTIFY vote.created
+rrq --> rrq: save vote
+activate rrq
+deactivate rrq
+bro -> rrc: NOTIFY vote.created
+rrc --> rrc: save vote
+activate rrc
+deactivate rrc
+bro -> rvq: NOTIFY vote.created
+rvq --> rvq: save vote
+activate rvq
+deactivate rvq
+bro -> rvc: NOTIFY vote.created
+deactivate bro
+rvc --> rvc: save vote
+activate rvc
+deactivate rvc
+
 
 @enduml

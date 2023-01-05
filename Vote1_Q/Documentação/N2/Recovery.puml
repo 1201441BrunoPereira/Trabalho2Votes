@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+autonumber
+
+participant ":Vote_C" as vt
+participant ":AMQP Broker" as bro
+participant ":RecoveryVoteC" as rc
+
+
+
+activate vt
+vt -> bro: PUBLISH voteQRecovery.request + Vot
+activate bro
+bro -> rc: NOTIFY voteQRecovery.request + Vot
+activate rc
+rc --> bro: List<Vote>
+deactivate rc
+bro --> vt: List<Vote>
+deactivate bro
+vt --> vt: save Vote
+vt -> bro: PUBLISH voteQRecovery.request + Tev
+activate bro
+bro -> rc: NOTIFY voteQRecovery.request + Tev
+activate rc
+rc --> bro: List<TemporaryVote>
+deactivate rc
+bro --> vt: List<TemporaryVote>
+deactivate bro
+vt --> vt: save TemporaryVote
+deactivate vt
+
+@enduml

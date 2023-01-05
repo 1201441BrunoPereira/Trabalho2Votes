@@ -6,7 +6,7 @@ autonumber
 
 participant ":Vote_Q" as vote
 
--> vote: GET/votes
+-> vote: GET/tempVote/{tempVoteId}
 activate vote
 [<- vote: 200
 deactivate vote

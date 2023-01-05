@@ -1,9 +1,14 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-autoactivate on
 autonumber
 
 participant ":Vote_Q" as vote
+
+
+-> vote: GET/votes/{voteId}
+activate vote
+[<- vote: 200
+deactivate vote
 
 @enduml
