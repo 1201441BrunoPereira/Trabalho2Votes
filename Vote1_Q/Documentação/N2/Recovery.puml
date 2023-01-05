@@ -4,9 +4,9 @@
 
 autonumber
 
-participant ":Vote_C" as vt
+participant ":Vote_Q" as vt
 participant ":AMQP Broker" as bro
-participant ":RecoveryVoteC" as rc
+participant ":RecoveryVteQ" as rc
 
 
 
