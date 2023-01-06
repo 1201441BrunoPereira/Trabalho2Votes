@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+autonumber
+
+participant "<container> Vote_C" as vc
+participant "<container> RabbitMQ" as amqp
+participant "<container> Reviews_C" as rc
+
+[--> vc: POST/votes/voteProduct
+activate vc
+vc --> vc: Save(tempVote)
+vc --> amqp: PUBLISH tempVote.created(tempVote)
+activate amqp
+[<- vc: code:202
+deactivate vc
+amqp --> rc: NOTIFY tempVote.created(tempVote)
+deactivate amqp
+activate rc
+rc --> rc: Save(Review)
+rc ->]: sendEmail()
+rc --> amqp: PUBLISH review.created(review)
+deactivate rc
+activate amqp
+amqp --> vc: NOTIFY review.created(review)
+deactivate amqp
+activate vc
+[<- vc: sendEmail()
+deactivate vc
+rc <-: POST/reviews/{{reviewId}}/approve/true
+activate rc
+rc ->]: ok
+rc --> amqp: PUBLISH review.approved(review)
+deactivate rc
+activate amqp
+amqp --> vc: NOTIFY review.approved(review)
+deactivate amqp
+activate vc
+vc --> vc: Save(Vote)
+vc --> amqp: PUBLISH vote.created(vote)
+activate amqp
+[<- vc: sendEmail()
+deactivate vc
+amqp --> rc: NOTIFY vote.created(vote)
+deactivate amqp
+activate rc
+rc --> rc: updateReview(vote)
+deactivate rc
+
+@enduml
