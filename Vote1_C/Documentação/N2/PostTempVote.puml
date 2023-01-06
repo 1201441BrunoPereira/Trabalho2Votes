@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+autonumber
+
+participant ":Vote_C" as vc
+participant ":AMQPMessageBroker" as amqp
+participant "Vote_Q" as votq
+participant ":Reviews_C" as rc
+participant ":RecoveryVoteQ" as rvq
+
+
+
+
+-> vc: POST/votes/voteProduct
+activate vc
+vc --> vc: Save(tempVote)
+vc --> amqp: PUBLISH tempVote.created(tempVote)
+activate amqp
+[<- vc: 202
+deactivate vc
+amqp -> votq: NOTIFY tempVote.created
+votq --> votq: save tempVote
+activate votq
+deactivate votq
+amqp -> rc: NOTIFY tempVote.created
+rc --> rc: save tempVote
+activate rc
+deactivate rc
+amqp -> rvq: NOTIFY tempVote.created
+deactivate amqp
+rvq --> rvq: save tempVote
+activate rvq
+deactivate rvq
+
+@enduml
